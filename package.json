@@ -6,11 +6,15 @@
   "license": "MIT",
   "version": "0.1.0",
   "icon": "icon.png",
-  "publisher": "fastly",
+  "publisher": "Fastly",
   "repository": {
     "type": "git",
     "url": "https://github.com/doramatadora/vscode-fastly-vcl.git"
   },
+  "workspaces":[
+    "client",
+    "server"
+  ],
   "categories": [
     "Language Packs"
   ],
@@ -67,7 +71,6 @@
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
-    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
     "test": "sh ./scripts/e2e.sh",
     "package": "vsce package",
     "publish": "vsce package",

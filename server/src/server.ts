@@ -150,6 +150,12 @@ documents.onDidChangeContent(change => {
   linter.debouncedVCLLint(change.document)
 })
 
+// Unsaved document with Fastly VCL language setting.
+documents.onWillSave(event => {
+  activeDoc.set(event.document)
+  linter.debouncedVCLLint(event.document)
+})
+
 connection.onDidChangeWatchedFiles((_changes) => {
   // TODO: Implement config file parsing and validation.
   // Config files changed (e.g. .vclrc, .falcorc), may need to revalidate all open documents.
