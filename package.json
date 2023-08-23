@@ -1,5 +1,5 @@
 {
-  "name": "vscode-vcl",
+  "name": "fastly-vcl-vscode",
   "displayName": "Fastly VCL Support [EXPERIMENTAL]",
   "description": "Fastly Varnish Configuration Language (VCL) language support for Visual Studio Code",
   "author": "Dora Militaru <dora@doramilitaru.com>",
