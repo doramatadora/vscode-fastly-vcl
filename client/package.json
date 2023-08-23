@@ -1,0 +1,21 @@
+{
+	"name": "fastly-vcl-language-client",
+	"description": "VSCode part of the Fastly VCL language server.",
+	"author": "Dora Militaru <dora@doramilitaru.com>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/doramatadora/vscode-fastly-vcl.git"
+	},
+	"license": "MIT",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.75.0"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^8.1.0"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.81.0",
+		"@vscode/test-electron": "^2.3.4"
+	}
+}

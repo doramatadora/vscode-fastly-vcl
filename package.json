@@ -1,0 +1,89 @@
+{
+  "name": "vscode-vcl",
+  "displayName": "Fastly VCL Support [EXPERIMENTAL]",
+  "description": "Fastly Varnish Configuration Language (VCL) language support for Visual Studio Code",
+  "author": "Dora Militaru <dora@doramilitaru.com>",
+  "license": "MIT",
+  "version": "0.1.0",
+  "icon": "icon.png",
+  "publisher": "fastly",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doramatadora/vscode-fastly-vcl.git"
+  },
+  "categories": [
+    "Language Packs"
+  ],
+  "keywords": [],
+  "engines": {
+    "vscode": "^1.75.0",
+    "node": ">=18"
+  },
+  "activationEvents": [],
+  "main": "./client/out/extension",
+  "contributes": {
+    "languages": [
+      {
+        "aliases": [
+          "Fastly VCL",
+          "vcl"
+        ],
+        "configuration": "./languages/vcl.json",
+        "extensions": [
+          ".vcl",
+          ".VCL"
+        ],
+        "id": "vcl"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "vcl",
+        "scopeName": "source.vcl",
+        "path": "./grammars/vcl.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Fastly VCL",
+      "properties": {
+        "vcl.lintingEnabled": {
+          "scope": "resource",
+          "type": "boolean",
+          "default": true,
+          "description": "Experimental: Enable linting."
+        },
+        "vcl.maxLintingIssues": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Specifies the maximum number of linting issues that the server will return."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+    "test": "sh ./scripts/e2e.sh",
+    "package": "vsce package",
+    "publish": "vsce package",
+    "prepare": "husky install"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.17.6",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "@vscode/vsce": "^2.20.1",
+    "eslint": "^8.47.0",
+    "gray-matter": "^4.0.3",
+    "husky": "^8.0.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.6"
+  }
+}

@@ -1,0 +1,11 @@
+out
+node_modules
+client/server
+.vscode-test
+.sparse
+.yarn
+.tmp
+.DS_Store
+*.vsix
+.tmp
+.tmp*
