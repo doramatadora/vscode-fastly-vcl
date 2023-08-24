@@ -32,7 +32,7 @@ npm i
 1. Open this folder in VS Code.
 1. Press `Cmd+Shift+B` to start compiling the client and server in watch mode.
 1. Press `Cmd+Shift+D` to switch to the **Run and Debug View** in the sidebar.
-1. Select `Test Fastly VCL Language Client` from the drop down.
+1. Select `Fastly VCL Client` from the drop down.
 1. Press **▷** to run the launch config with the debugger attached (`F5`).
 1. In the [Extension Development Host](https://code.visualstudio.com/api/get-started/your-first-extension#:~:text=Then%2C%20inside%20the%20editor%2C%20press%20F5.%20This%20will%20compile%20and%20run%20the%20extension%20in%20a%20new%20Extension%20Development%20Host%20window.) instance of VSCode, open a document in `Fastly VCL` language mode. 
 1. Save the file with a `.vcl` extension. 

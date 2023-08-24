@@ -83,7 +83,7 @@ export async function validateVCLDocument (vclDoc: TextDocument): Promise<void> 
     diagnosticsOnly: true // Set to false to return the full AST (for parseable VCL)
   })) as LintResult
 
-  console.debug('validateVCLDocument', vclDocPath)
+  console.debug('lint', vclDocPath)
 
   let problems = 0
   const diagnostics: Diagnostic[] = []

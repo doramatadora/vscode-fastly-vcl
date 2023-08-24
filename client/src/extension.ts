@@ -46,7 +46,7 @@ export function activate (context: ExtensionContext) {
   // Create the language client and start the client.
   client = new LanguageClient(
     'vcl',
-    'Fastly VCL Language Server',
+    'Fastly VCL Server',
     serverOptions,
     clientOptions
   )

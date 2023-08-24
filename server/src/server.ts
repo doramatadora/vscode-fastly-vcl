@@ -121,7 +121,7 @@ export function getDocumentSettings(
   if (!result) {
     result = connection.workspace.getConfiguration({
       scopeUri: resource,
-      section: 'vcl'
+      section: 'fastly.vcl'
     })
     documentSettings.set(resource, result)
   }
@@ -133,7 +133,7 @@ connection.onDidChangeConfiguration(change => {
     // Reset all cached document settings.
     documentSettings.clear()
   } else {
-    globalConfig = <ConfigSettings>(change.settings.vcl || CONFIG)
+    globalConfig = <ConfigSettings>(change.settings.fastly.vcl || CONFIG)
   }
   // Revalidate all open documents.
   documents.all().forEach(linter.validateVCLDocument)

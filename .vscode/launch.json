@@ -5,7 +5,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "Test Fastly VCL Language Client",
+			"name": "Fastly VCL Client",
 			"runtimeExecutable": "${execPath}",
 			"args": ["--extensionDevelopmentPath=${workspaceRoot}"],
 			"outFiles": ["${workspaceRoot}/client/out/**/*.js"],
@@ -15,7 +15,7 @@
 			}
 		},
 		{
-			"name": "Language Server E2E Test",
+			"name": "Fastly VCL E2E Test",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
