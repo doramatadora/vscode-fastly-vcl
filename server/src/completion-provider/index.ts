@@ -16,35 +16,31 @@ import * as vclHeaders from './headers'
 // Returns a list of completion items for the given position.
 export function query (params: TextDocumentPositionParams): CompletionItem[] {
   const activeDoc = documentCache.get(params.textDocument.uri)
-  
-  const textOnCurrentLine = activeDoc.getLine(params.position)
-  console.debug('completion:query', {
-    in: params.textDocument.uri,
-    textOnCurrentLine
-  })
+  if(!activeDoc) return []
 
-  if (textOnCurrentLine === 'sub ') {
+  const textOnCurrentLine = activeDoc.getLineTo(params.position)
+  const scope = activeDoc.getSubroutine(params.position)
+  
+  if(!scope) {
+    if (textOnCurrentLine.trim().toLowerCase().startsWith('#f')) {
+      // TODO: Fastly macro autocomplete
+    }
+    if (/^\s+(#|\/\/)/.test(textOnCurrentLine)) {
+      return []
+    }
     return vclSubroutines.query(params)
   }
-
-  const scope = activeDoc.getSubroutine(params.position)
-
-  if (textOnCurrentLine.trim().toLowerCase().startsWith('#f')) {
-    // TODO: Fastly macro autocomplete
-  }
-
-  if (/^\s+(#|\/\/)/.test(textOnCurrentLine)) {
-    return []
-  }
-
-  const builtinSubroutine = scope ? scope.replace(`vcl_`, ``) : null
+  
+  const builtinSubroutine = scope?.replace(`vcl_`, ``)
   const currentWord = activeDoc.getWord(params.position)
-  console.debug('completion:query:word', {
+
+  console.debug('completion:query', {
     in: params.textDocument.uri,
+    textOnCurrentLine,
     currentWord,
     scope,
     builtinSubroutine
-  })  
+  })
   
   return [
     ...vclFunctions.query(params, currentWord, builtinSubroutine),

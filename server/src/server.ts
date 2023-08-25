@@ -35,6 +35,7 @@ import { documentCache } from './shared/documentCache'
 import * as completionsProvider from './completion-provider'
 import * as signatureHelpProvider from './signature-help-provider'
 import * as hoverProvider from './hover-provider'
+import * as semanticTokenProvider from './semantic-tokens-provider'
 import * as linter from './linter'
 
 // Create a connection for the server (Node-IPC transport).
@@ -76,8 +77,14 @@ connection.onInitialize((params: InitializeParams) => {
       signatureHelpProvider: {
         triggerCharacters: ['(', ',']
       },
-      hoverProvider: true
-      //workspaceSymbolProvider: true
+      hoverProvider: true,
+      semanticTokensProvider: {
+        legend: {
+          tokenTypes: [],
+          tokenModifiers: []
+        },
+        full: true
+      }
     }
   }
   if (hasWorkspaceFolderCapability) {
@@ -142,13 +149,15 @@ connection.onDidOpenTextDocument(params => {
   // Lint the newly opened document.
   documentCache.set(params.textDocument)
   const document = documentCache.get(params.textDocument.uri)
+  if(!document) return
   linter.validateVCLDocument(document)
 })
 
-connection.onDidChangeTextDocument(params => {
+connection.onDidChangeTextDocument(async(params) => {
   // Apply incremental changes to the cached document.
   documentCache.applyChanges(params)
   const document = documentCache.get(params.textDocument.uri)
+  if(!document) return
   linter.debouncedVCLLint(document)
 })
 
@@ -177,5 +186,12 @@ connection.onCompletionResolve(completionsProvider.resolve)
 connection.onSignatureHelp(signatureHelpProvider.help)
 
 connection.onHover(hoverProvider.resolve)
+
+connection.languages.semanticTokens.on(async (params, token, reporter) => {
+  const document = documentCache.get(params.textDocument.uri)
+  await semanticTokenProvider.tokenize(document.getLines()) 
+  console.log('semanticTokens.on', params, token, reporter)
+  return null
+})
 
 connection.listen()

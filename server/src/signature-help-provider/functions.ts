@@ -39,18 +39,24 @@ for (const fnName of Object.keys(vclFunctions)) {
   })
 }
 
-export function signatureHelpProvider (params: SignatureHelpParams): SignatureHelp {
+export function signatureHelpProvider (params: SignatureHelpParams): SignatureHelp | undefined {
   console.debug('sighelp:functions')
   const activeDoc = documentCache.get(params.textDocument.uri)
-  
-  const textOnCurrentLine = activeDoc.getLine(params.position)
+  if (!activeDoc) return 
+
+  const textOnCurrentLine = activeDoc.getLineTo(params.position)
   const fnCandidates = textOnCurrentLine.match(/\b((?:\w|\.)+)\({1}/g)
+
   if (!fnCandidates) return
+
   const fnName = fnCandidates[fnCandidates.length - 1].slice(0, -1)
   const sig = FUNCTIONS.get(fnName)
+  if (!sig) return
+
   const argCount = textOnCurrentLine
     .slice(textOnCurrentLine.lastIndexOf(`${fnName}(`))
     .split(',')
+    
   return {
     signatures: [sig],
     activeSignature: 0,

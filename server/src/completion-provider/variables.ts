@@ -54,7 +54,7 @@ for (const vName of Object.keys(vclVariables)) {
 }
 
 export function query (
-  params: TextDocumentPositionParams,
+  _params: TextDocumentPositionParams,
   currentWord: string,
   scope?: string
 ): CompletionItem[] {

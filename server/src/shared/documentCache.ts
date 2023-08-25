@@ -33,13 +33,14 @@ export class DocumentCache {
     )
   }
 
-  // TextDocument.update() handles nonsequential changes with mergesort
   public applyChanges ({
     textDocument,
     contentChanges
   }: DidChangeTextDocumentParams): void {
     const doc = this._documents.get(textDocument.uri)
-    doc.update(contentChanges, textDocument.version)
+    doc?.update(contentChanges, textDocument.version)
+    // TODO: retokenize lines that changed
+
   }
 
   public get (uri: string, alwaysCache: boolean = true): VclDocument | undefined {
