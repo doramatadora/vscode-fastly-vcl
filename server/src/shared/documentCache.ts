@@ -38,7 +38,7 @@ export class DocumentCache {
     textDocument,
     contentChanges
   }: DidChangeTextDocumentParams): void {
-    let doc = this._documents.get(textDocument.uri)
+    const doc = this._documents.get(textDocument.uri)
     doc.update(contentChanges, textDocument.version)
   }
 
