@@ -21,9 +21,11 @@ export function debounce<F extends (...args: any[]) => void>(
   }
 }
 
+export const LANGUAGE_ID = 'vcl'
 export const DOCS_URL = 'https://developer.fastly.com/reference/vcl'
 export const VCL_FLOW_URL =
   'https://developer.fastly.com/learning/vcl/using#the-vcl-request-lifecycle'
 export const HEADER_RX = /^(obj|((be)?re(q|sp)))\.http\./
 
 export * as BOILERPLATE from '../metadata/boilerplate'
+

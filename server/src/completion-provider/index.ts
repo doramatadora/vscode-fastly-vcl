@@ -4,7 +4,7 @@ import {
   TextDocumentPositionParams
 } from 'vscode-languageserver/node'
 
-import { activeDoc } from '../shared/activeDoc'
+import { documentCache } from '../shared/documentCache'
 
 import * as vclFunctions from './functions'
 import * as vclVariables from './variables'
@@ -15,6 +15,8 @@ import * as vclHeaders from './headers'
 
 // Returns a list of completion items for the given position.
 export function query (params: TextDocumentPositionParams): CompletionItem[] {
+  const activeDoc = documentCache.get(params.textDocument.uri)
+  
   const textOnCurrentLine = activeDoc.getLine(params.position)
   console.debug('completion:query', {
     in: params.textDocument.uri,

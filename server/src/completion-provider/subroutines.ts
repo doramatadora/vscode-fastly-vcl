@@ -7,6 +7,7 @@ import {
 } from 'vscode-languageserver/node'
 
 import { slugify, DOCS_URL, VCL_FLOW_URL, BOILERPLATE } from '../shared/utils'
+
 import vclSubroutines from '../metadata/subroutines.json'
 
 const SUBROUTINES: CompletionItem[] = []

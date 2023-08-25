@@ -4,11 +4,11 @@ import {
   Position
 } from 'vscode-languageserver/node'
 
-import { TextDocument } from 'vscode-languageserver-textdocument'
+import { lintText } from 'falco-js'
+
+import { VclDocument } from '../shared/vclDocument'
 
 import { debounce } from '../shared/utils'
-
-import { lintText } from 'falco-js'
 
 import {
   getDocumentSettings,
@@ -68,7 +68,7 @@ export interface LintResult {
   Vcl?: any
 }
 
-export async function validateVCLDocument (vclDoc: TextDocument): Promise<void> {
+export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
   const settings = await getDocumentSettings(vclDoc.uri)
 
   // if(!settings.lintingEnabled) {
@@ -80,10 +80,10 @@ export async function validateVCLDocument (vclDoc: TextDocument): Promise<void> 
   // TODO: Cache the AST and walk it for context-aware completions, colorization, etc
   const lintResult = (await lintText(vclDoc.getText(), {
     vclFileName: vclDocPath,
-    diagnosticsOnly: true // Set to false to return the full AST (for parseable VCL)
+    diagnosticsOnly: false // Set to false to return the full AST (for parseable VCL)
   })) as LintResult
 
-  console.debug('lint', vclDocPath)
+  console.debug('lint', vclDocPath, JSON.stringify(lintResult.Vcl,null,2))
 
   let problems = 0
   const diagnostics: Diagnostic[] = []

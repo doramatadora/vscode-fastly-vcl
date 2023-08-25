@@ -29,20 +29,16 @@ import {
   Location
 } from 'vscode-languageserver/node'
 
-import { TextDocument } from 'vscode-languageserver-textdocument'
 import { ConfigSettings, CONFIG } from './config'
-import { activeDoc } from './shared/activeDoc'
+import { documentCache } from './shared/documentCache'
 
 import * as completionsProvider from './completion-provider'
 import * as signatureHelpProvider from './signature-help-provider'
 import * as hoverProvider from './hover-provider'
 import * as linter from './linter'
 
-// Create a connection for the server (IPC transport).
+// Create a connection for the server (Node-IPC transport).
 export const connection = createConnection(ProposedFeatures.all)
-
-// Create a text document manager.
-export const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument)
 
 let globalConfig: ConfigSettings = CONFIG
 let hasConfigurationCapability = false
@@ -81,6 +77,7 @@ connection.onInitialize((params: InitializeParams) => {
         triggerCharacters: ['(', ',']
       },
       hoverProvider: true
+      //workspaceSymbolProvider: true
     }
   }
   if (hasWorkspaceFolderCapability) {
@@ -103,7 +100,7 @@ connection.onInitialized(() => {
   }
   if (hasWorkspaceFolderCapability) {
     connection.workspace.onDidChangeWorkspaceFolders(_event => {
-      connection.console.log('Workspace folder change event received.')
+      connection.console.log('Workspace folder changed.')
     })
   }
 })
@@ -136,27 +133,38 @@ connection.onDidChangeConfiguration(change => {
     globalConfig = <ConfigSettings>(change.settings.fastly.vcl || CONFIG)
   }
   // Revalidate all open documents.
-  documents.all().forEach(linter.validateVCLDocument)
+  for (const document of documentCache.all()) {
+    linter.validateVCLDocument(document)
+  }
 })
 
-// Only keep settings for open documents.
-documents.onDidClose(e => {
-  documentSettings.delete(e.document.uri)
+connection.onDidOpenTextDocument(params => {
+  // Lint the newly opened document.
+  documentCache.set(params.textDocument)
+  const document = documentCache.get(params.textDocument.uri)
+  linter.validateVCLDocument(document)
 })
 
-// The content of a text document has changed, or a doc was first opened. 
-documents.onDidChangeContent(change => {
-  activeDoc.set(change.document)
-  linter.debouncedVCLLint(change.document)
+connection.onDidChangeTextDocument(params => {
+  // Apply incremental changes to the cached document.
+  documentCache.applyChanges(params)
+  const document = documentCache.get(params.textDocument.uri)
+  linter.debouncedVCLLint(document)
 })
 
-// Unsaved document with Fastly VCL language setting.
-documents.onWillSave(event => {
-  activeDoc.set(event.document)
-  linter.debouncedVCLLint(event.document)
+connection.onDidSaveTextDocument(params => {
+  // The content of a text document has changed.
 })
 
-connection.onDidChangeWatchedFiles((_changes) => {
+connection.onDidCloseTextDocument(params => {
+  // Only cache open documents and their settings.
+  // TODO: hows this work for ASTs?
+  documentSettings.delete(params.textDocument.uri)
+  documentCache.delete(params.textDocument.uri)
+})
+
+
+connection.onDidChangeWatchedFiles(_changes => {
   // TODO: Implement config file parsing and validation.
   // Config files changed (e.g. .vclrc, .falcorc), may need to revalidate all open documents.
   // Noop for now.
@@ -170,5 +178,4 @@ connection.onSignatureHelp(signatureHelpProvider.help)
 
 connection.onHover(hoverProvider.resolve)
 
-documents.listen(connection)
 connection.listen()

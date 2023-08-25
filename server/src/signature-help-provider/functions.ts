@@ -1,11 +1,13 @@
 import {
+  SignatureHelpParams,
   SignatureHelp,
   SignatureInformation,
   MarkupKind
 } from 'vscode-languageserver/node'
 
 import { slugify, DOCS_URL } from '../shared/utils'
-import { activeDoc } from '../shared/activeDoc'
+import { documentCache } from '../shared/documentCache'
+
 import vclFunctions from '../metadata/functions.json'
 import vclSubroutines from '../metadata/subroutines.json'
 
@@ -37,9 +39,11 @@ for (const fnName of Object.keys(vclFunctions)) {
   })
 }
 
-export function signatureHelpProvider (sigHelpParams): SignatureHelp {
+export function signatureHelpProvider (params: SignatureHelpParams): SignatureHelp {
   console.debug('sighelp:functions')
-  const textOnCurrentLine = activeDoc.getLine(sigHelpParams.position)
+  const activeDoc = documentCache.get(params.textDocument.uri)
+  
+  const textOnCurrentLine = activeDoc.getLine(params.position)
   const fnCandidates = textOnCurrentLine.match(/\b((?:\w|\.)+)\({1}/g)
   if (!fnCandidates) return
   const fnName = fnCandidates[fnCandidates.length - 1].slice(0, -1)

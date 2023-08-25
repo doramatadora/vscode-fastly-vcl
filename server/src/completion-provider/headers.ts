@@ -7,6 +7,7 @@ import {
 } from 'vscode-languageserver/node'
 
 import { slugify, DOCS_URL } from '../shared/utils'
+
 import vclHeaders from '../metadata/headers.json'
 import vclSubroutines from '../metadata/subroutines.json'
 import vclVariables from '../metadata/variables.json'
