@@ -35,7 +35,6 @@ import { documentCache } from './shared/documentCache'
 import * as completionsProvider from './completion-provider'
 import * as signatureHelpProvider from './signature-help-provider'
 import * as hoverProvider from './hover-provider'
-import * as semanticTokenProvider from './semantic-tokens-provider'
 import * as linter from './linter'
 
 // Create a connection for the server (Node-IPC transport).
@@ -50,17 +49,11 @@ connection.onInitialize((params: InitializeParams) => {
   const capabilities = params.capabilities
 
   // If client doesn't support the `workspace/configuration`, fall back on global settings.
-  hasConfigurationCapability = !!(
-    capabilities.workspace && !!capabilities.workspace.configuration
-  )
-  hasWorkspaceFolderCapability = !!(
-    capabilities.workspace && !!capabilities.workspace.workspaceFolders
-  )
-  hasDiagnosticRelatedInformationCapability = !!(
-    capabilities.textDocument &&
-    capabilities.textDocument.publishDiagnostics &&
-    capabilities.textDocument.publishDiagnostics.relatedInformation
-  )
+  hasConfigurationCapability = !!capabilities.workspace?.configuration
+  hasWorkspaceFolderCapability = !!capabilities.workspace?.workspaceFolders
+  
+  hasDiagnosticRelatedInformationCapability =
+    !!capabilities.textDocument?.publishDiagnostics?.relatedInformation
 
   // Announce server capabilities.
   const result: InitializeResult = {
@@ -68,7 +61,7 @@ connection.onInitialize((params: InitializeParams) => {
       textDocumentSync: TextDocumentSyncKind.Incremental,
       completionProvider: {
         resolveProvider: true,
-        triggerCharacters: [' '],
+        triggerCharacters: ['#'],
         allCommitCharacters: [';', '{'],
         completionItem: {
           labelDetailsSupport: true
@@ -77,14 +70,7 @@ connection.onInitialize((params: InitializeParams) => {
       signatureHelpProvider: {
         triggerCharacters: ['(', ',']
       },
-      hoverProvider: true,
-      semanticTokensProvider: {
-        legend: {
-          tokenTypes: [],
-          tokenModifiers: []
-        },
-        full: true
-      }
+      hoverProvider: true
     }
   }
   if (hasWorkspaceFolderCapability) {
@@ -139,6 +125,8 @@ connection.onDidChangeConfiguration(change => {
   } else {
     globalConfig = <ConfigSettings>(change.settings.fastly.vcl || CONFIG)
   }
+  if (!documentCache.isEmpty() || !hasDiagnosticRelatedInformationCapability)
+    return
   // Revalidate all open documents.
   for (const document of documentCache.all()) {
     linter.validateVCLDocument(document)
@@ -149,15 +137,15 @@ connection.onDidOpenTextDocument(params => {
   // Lint the newly opened document.
   documentCache.set(params.textDocument)
   const document = documentCache.get(params.textDocument.uri)
-  if(!document) return
+  if (!document) return
   linter.validateVCLDocument(document)
 })
 
-connection.onDidChangeTextDocument(async(params) => {
+connection.onDidChangeTextDocument(async params => {
   // Apply incremental changes to the cached document.
   documentCache.applyChanges(params)
   const document = documentCache.get(params.textDocument.uri)
-  if(!document) return
+  if (!document || !hasDiagnosticRelatedInformationCapability) return
   linter.debouncedVCLLint(document)
 })
 
@@ -172,7 +160,6 @@ connection.onDidCloseTextDocument(params => {
   documentCache.delete(params.textDocument.uri)
 })
 
-
 connection.onDidChangeWatchedFiles(_changes => {
   // TODO: Implement config file parsing and validation.
   // Config files changed (e.g. .vclrc, .falcorc), may need to revalidate all open documents.
@@ -186,12 +173,5 @@ connection.onCompletionResolve(completionsProvider.resolve)
 connection.onSignatureHelp(signatureHelpProvider.help)
 
 connection.onHover(hoverProvider.resolve)
-
-connection.languages.semanticTokens.on(async (params, token, reporter) => {
-  const document = documentCache.get(params.textDocument.uri)
-  await semanticTokenProvider.tokenize(document.getLines()) 
-  console.log('semanticTokens.on', params, token, reporter)
-  return null
-})
 
 connection.listen()

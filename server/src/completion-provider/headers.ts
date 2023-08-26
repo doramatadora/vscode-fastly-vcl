@@ -39,13 +39,13 @@ for (const hName of Object.keys(vclHeaders)) {
         available: token.available,
         methods: methods || []
       },
+      tags: token.deprecated ? [CompletionItemTag.Deprecated] : [],
       kind: CompletionItemKind.EnumMember
     })
   }
 
   HEADER_COMPLETIONS.set(hName, {
     label: hName,
-    tags: token.deprecated ? [CompletionItemTag.Deprecated] : [],
     detail: `${hName} HEADER`,
     documentation: {
       kind: MarkupKind.Markdown,

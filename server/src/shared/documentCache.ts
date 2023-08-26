@@ -21,6 +21,10 @@ export class DocumentCache {
     return new VclDocument(uri, LANGUAGE_ID, 1, text)
   }
 
+  public isEmpty(): boolean {
+    return this._documents.size === 0
+  }
+  
   public set (document: TextDocumentItem): void {
     this._documents.set(
       document.uri,

@@ -7,6 +7,7 @@ import {
 
 export class VclDocument {
   private _doc: TextDocument
+  private _ast: any
 
   constructor (
     uri: string,
@@ -15,6 +16,14 @@ export class VclDocument {
     content: string
   ) {
     this._doc = TextDocument.create(uri, languageId, version, content)
+  }
+
+  get AST (): any {
+    return this._ast
+  }
+
+  set AST (ast: any) {
+    this._ast = ast
   }
 
   get doc (): TextDocument {
@@ -50,18 +59,16 @@ export class VclDocument {
   }
 
   getLine (position: Position): string {
-    return this._doc
-      .getText({
-        start: {
-          line: position.line,
-          character: 0
-        },
-        end: {
-          line: position.line + 1,
-          character: 0
-        }
-      })
-      .replace(/\r?\n$/, '')
+    return this._doc.getText({
+      start: {
+        line: position.line,
+        character: 0
+      },
+      end: {
+        line: position.line,
+        character: Number.MAX_SAFE_INTEGER
+      }
+    })
   }
 
   *getLines () {
@@ -82,17 +89,20 @@ export class VclDocument {
   }
 
   getSubroutine (position: Position): string | null {
-    const brackets = {
-      open: 0,
-      close: 0
-    }
+    let text = ''
     for (let l = position.line - 1; l >= 0; l--) {
-      const line = this.getLine({ line: l, character: 0 })
-      brackets.open += (line.match(/\{/g) || []).length
-      brackets.close += (line.match(/\}/g) || []).length
-      const [_, subroutine] = line.match(/^sub (\w+)\s*{/) || []
-      if (subroutine && brackets.open >= brackets.close) {
-        return subroutine
+      const line = this.getLine({ line: l, character: 0 })      
+      text = `${line}${text}`
+      const [_, subroutine] = line.match(/^\s*sub (\w+)\s*{?/) || []
+      if (subroutine) {
+        // Remove any quoted strings, so we don't count brackets inside them.
+        text.replace(/"([^"]*)"/g, '')
+        const openBrackets = (text.match(/\{/g) || []).length
+        const closeBrackets = (text.match(/\}/g) || []).length
+        if (openBrackets > closeBrackets) {
+          return subroutine
+        }
+        return null
       }
     }
     return null

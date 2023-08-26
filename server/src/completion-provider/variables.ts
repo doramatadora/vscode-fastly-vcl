@@ -30,13 +30,13 @@ for (const vName of Object.keys(vclVariables)) {
       },
       data: {
         methods: token.methods
-      },
+      },      
+      tags: token.deprecated ? [CompletionItemTag.Deprecated] : [],
       kind: CompletionItemKind.Variable
     })
 
     VARIABLE_COMPLETIONS.set(vName, {
       label: vName,
-      tags: token.deprecated ? [CompletionItemTag.Deprecated] : [],
       detail: `${vName} ${token.type}`,
       documentation: {
         kind: MarkupKind.Markdown,

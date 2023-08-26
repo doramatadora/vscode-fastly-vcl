@@ -20,24 +20,30 @@ export function query (params: TextDocumentPositionParams): CompletionItem[] {
 
   const textOnCurrentLine = activeDoc.getLineTo(params.position)
   const scope = activeDoc.getSubroutine(params.position)
-  
+
   if(!scope) {
-    if (textOnCurrentLine.trim().toLowerCase().startsWith('#f')) {
-      // TODO: Fastly macro autocomplete
-    }
-    if (/^\s+(#|\/\/)/.test(textOnCurrentLine)) {
-      return []
-    }
+    // Fastly subroutine autocomplete, for now.
     return vclSubroutines.query(params)
+    // TODO: Add support for other snippets: backend, table, etc.
   }
-  
+
   const builtinSubroutine = scope?.replace(`vcl_`, ``)
+
+  if (textOnCurrentLine.trim() === '#' && vclSubroutines.SUBROUTINE_COMPLETIONS.has(`sub ${scope}`)) {
+    return [{
+      label: `FASTLY ${builtinSubroutine}`,
+      kind: CompletionItemKind.Text
+    }]
+  }
+
+  if (/^\s+(#|\/\/)/.test(textOnCurrentLine)) {
+    return []
+  }
+
   const currentWord = activeDoc.getWord(params.position)
 
   console.debug('completion:query', {
     in: params.textDocument.uri,
-    textOnCurrentLine,
-    currentWord,
     scope,
     builtinSubroutine
   })

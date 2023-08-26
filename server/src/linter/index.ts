@@ -76,7 +76,8 @@ export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
   // }
 
   console.debug('lint', vclDoc.uri)
-  const vclDocPath = vclDoc.uri.replace('file://', '')
+  // Remove file://
+  const vclDocPath = vclDoc.uri.slice(7)
 
   // TODO: Cache the AST and walk it for context-aware completions, colorization, etc
   const lintResult = (await lintText(vclDoc.getText(), {
@@ -84,8 +85,8 @@ export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
     diagnosticsOnly: false // Set to false to return the full AST (for parseable VCL only)
   })) as LintResult
 
-  //const ust = convertASTJSONToUST(lintResult.Vcl?.AST);
-  //console.log(ust)
+  vclDoc.AST = lintResult.Vcl?.AST
+
   let problems = 0
   const diagnostics: Diagnostic[] = []
 
@@ -142,46 +143,3 @@ export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
 }
 
 export const debouncedVCLLint = debounce(validateVCLDocument, DEBOUNCE_INTERVAL)
-
-// import { Node } from 'unist';
-// import { u } from 'unist-builder';
-
-// // Define a TypeScript interface for your AST structure
-// interface ASTNode {
-//   type: string;
-//   [key: string]: any;
-// }
-
-// // Function to recursively convert the AST JSON to a universal syntax tree
-// function convertASTJSONToUST(astJSON: ASTNode): Node {
-//   const properties: { [key: string]: any } = {};
-
-//   // Iterate through the properties in the AST JSON
-//   for (const key in astJSON) {
-//     if (key !== 'type') {
-//       const value = astJSON[key];
-
-//       // Handle different value types as needed
-//       if (Array.isArray(value)) {
-//         properties[key] = value.map((item) => {
-//           if (typeof item === 'object' && item !== null) {
-//             return convertASTJSONToUST(item as ASTNode);
-//           } else {
-//             return item;
-//           }
-//         });
-//       } else if (typeof value === 'object' && value !== null) {
-//         properties[key] = convertASTJSONToUST(value as ASTNode);
-//       } else {
-//         properties[key] = value;
-//       }
-//     }
-//   }
-
-//   // Use the unist-builder's `u` function to create the UST node
-//   return u(astJSON.type, properties);
-// }
-
-
-
-

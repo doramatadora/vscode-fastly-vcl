@@ -12,22 +12,21 @@ import vclSubroutines from '../metadata/subroutines.json'
 
 const SUBROUTINES: CompletionItem[] = []
 
-const SUBROUTINE_COMPLETIONS: Map<string, CompletionItem> = new Map()
+export const SUBROUTINE_COMPLETIONS: Map<string, CompletionItem> = new Map()
 
 for (const sName of Object.keys(vclSubroutines)) {
   const token = vclSubroutines[sName] as any
 
   SUBROUTINES.push({
-    label: `vcl_${sName}`,
+    label: `sub vcl_${sName}`,
     kind: CompletionItemKind.Snippet
   })
 
-  SUBROUTINE_COMPLETIONS.set(`vcl_${sName}`, {
+  SUBROUTINE_COMPLETIONS.set(`sub vcl_${sName}`, {
     label: sName,
-    tags: token.returns || [],
     detail: `vcl_${sName} { ... }`,
     insertTextFormat: InsertTextFormat.Snippet,
-    insertText: BOILERPLATE[sName]?.snippet.slice(4) || `vcl_${sName}`,
+    insertText: BOILERPLATE[sName]?.snippet || `sub vcl_${sName}`,
     documentation: {
       kind: MarkupKind.Markdown,
       value: [

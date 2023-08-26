@@ -27,12 +27,12 @@ for (const fnName of Object.keys(vclFunctions)) {
     data: {
       methods: token.methods
     },
+    tags: token.deprecated ? [CompletionItemTag.Deprecated] : [],
     kind: CompletionItemKind.Method
   })
 
   FUNCTION_COMPLETIONS.set(fnName, {
     label: fnName,
-    tags: token.deprecated ? [CompletionItemTag.Deprecated] : [],
     detail: `${token.type} ${fnName}(${
       token.args?.map(arg => arg.name).join(', ') || ``
     })`,
