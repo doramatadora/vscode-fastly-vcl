@@ -90,7 +90,7 @@ export function getDocumentSettings(
   if (!result) {
     result = connection.workspace.getConfiguration({
       scopeUri: resource,
-      section: 'fastly.vcl'
+      section: 'doramatadora.vcl'
     })
     documentSettings.set(resource, result)
   }

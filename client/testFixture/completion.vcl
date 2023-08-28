@@ -1,1 +1,4 @@
-   
+sub vcl_fetch {
+
+    
+}

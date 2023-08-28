@@ -11,7 +11,7 @@ suite('Should do completion', () => {
   const docUri = getDocUri('completion.vcl')
 
   test('Completes functions and variables', async () => {
-    await testCompletion(docUri, new vscode.Position(0, 2), {
+    await testCompletion(docUri, new vscode.Position(1, 2), {
       items: [
         {
           label: 'accept.charset_lookup',

@@ -7,7 +7,7 @@ export let documentEol: string
 export let platformEol: string
 
 export async function activate (docUri: vscode.Uri) {
-  const ext = vscode.extensions.getExtension('Fastly.fastly-vcl-vscode')!
+  const ext = vscode.extensions.getExtension('doramatadora.fastly-vcl-vscode')!
   await ext.activate()
   try {
     doc = await vscode.workspace.openTextDocument(docUri)

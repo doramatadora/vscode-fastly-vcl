@@ -6,7 +6,7 @@
   "license": "MIT",
   "version": "0.1.0",
   "icon": "icon.png",
-  "publisher": "Fastly",
+  "publisher": "doramatadora",
   "repository": {
     "type": "git",
     "url": "https://github.com/doramatadora/vscode-fastly-vcl.git"
@@ -47,13 +47,13 @@
       "type": "object",
       "title": "Fastly VCL",
       "properties": {
-        "fastly.vcl.lintingEnabled": {
+        "doramatadora.vcl.lintingEnabled": {
           "scope": "resource",
           "type": "boolean",
           "default": true,
           "description": "Experimental: Enable linting."
         },
-        "fastly.vcl.maxLintingIssues": {
+        "doramatadora.vcl.maxLintingIssues": {
           "scope": "resource",
           "type": "number",
           "default": 100,

@@ -22,15 +22,13 @@ function getSymbol (vcl: VclDocument, node: ASTNode): DocumentSymbol | null {
     node.Name || node.Module || node
   )
   switch (node.Token.Type) {
-    // Declarations:
-    case 'BACKEND':
+    case 'BACKEND': // Declarations:
     case 'ACL':
     case 'TABLE':
     case 'DIRECTOR':
     case 'RATECOUNTER':
     case 'PENALTYBOX':
-    // Subroutines:
-    case 'SUBROUTINE':
+    case 'SUBROUTINE': // Subroutines:
       if (node.Nest) return null
       const declarationBlockRange = rangeForBlock(vcl, node)
       if (declarationBlockRange.end.line === selectionRange.end.line) {
@@ -43,14 +41,12 @@ function getSymbol (vcl: VclDocument, node: ASTNode): DocumentSymbol | null {
             ? SymbolKind.Function
             : SymbolKind.Object,
         detail: node.Token.Type,
-        range: rangeForBlock(vcl, node),
+        range: declarationBlockRange,
         selectionRange
       }
       break
-    // Variables:
-    case 'DECLARE':
-    // Files:
-    case 'INCLUDE':
+    case 'DECLARE': // Variables:
+    case 'INCLUDE': // Files:
       return {
         name: node.Name.Value,
         kind:
@@ -88,7 +84,7 @@ function rangeForBlock (vcl: VclDocument, node: ASTNode): Range {
 
 function selectionRangeFromNode (node: ASTNode): Range {
   const start = positionFromNode(node)
-  let end = positionFromNode(node)
+  const end = positionFromNode(node)
   end.character += node.Token.Literal.length
   return {
     start,
@@ -124,7 +120,7 @@ export function getSymbolInformation (vclDoc: VclDocument): DocumentSymbol[] {
 
 export function updateDocumentSymbols (vclDoc: VclDocument) {
   if (vclDoc.AST) {
-    let symbols: DocumentSymbol[] = []
+    const symbols: DocumentSymbol[] = []
     try {
       walkAST(vclDoc.AST, processSymbols(vclDoc, symbols))
     } catch (e) {
