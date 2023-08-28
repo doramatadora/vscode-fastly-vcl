@@ -715,8 +715,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "server.identity": {
@@ -725,8 +724,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "server.pop": {
@@ -735,8 +733,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "server.region": {
@@ -745,8 +742,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "server.datacenter": {
@@ -755,8 +751,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "server.port": {
@@ -765,8 +760,7 @@
     "type": "INTEGER",
     "access": "RO",
     "methods": [
-      "all",
-      "fetch_complete"
+      "all"
     ]
   },
   "req.method": {
@@ -853,11 +847,10 @@
   "req.http.{NAME}": {
     "category": "client-request",
     "desc": "HTTP headers by name for the request",
-    "type": "HDR_REQ",
+    "type": "STRING",
     "access": "RWU",
     "methods": [
-      "all",
-      "fetch_complete"
+      "all"
     ]
   },
   "req.protocol": {
@@ -903,9 +896,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -913,11 +904,10 @@
   "req.hash": {
     "category": "cache-object",
     "desc": "Add an item to the cache key",
-    "type": "HASH",
+    "type": "STRING",
     "access": "WO",
     "methods": [
       "hash",
-      "prehash",
       "error"
     ]
   },
@@ -927,8 +917,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "req.vcl.version": {
@@ -937,8 +926,7 @@
     "type": "INTEGER",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "req.vcl.generation": {
@@ -947,8 +935,7 @@
     "type": "INTEGER",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "req.vcl.md5": {
@@ -957,8 +944,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "req.is_clustering": {
@@ -977,9 +963,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -1045,8 +1029,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "req.customer_id": {
@@ -1055,8 +1038,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "req.digest": {
@@ -1074,12 +1056,10 @@
     "type": "FLOAT",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "hit",
       "fetch",
-      "predeliver",
       "deliver",
       "error",
       "log"
@@ -1093,7 +1073,6 @@
     "methods": [
       "recv",
       "fetch",
-      "predeliver",
       "deliver",
       "error"
     ]
@@ -1176,8 +1155,7 @@
     "type": "BOOL",
     "access": "RW",
     "methods": [
-      "recv",
-      "prehash"
+      "recv"
     ]
   },
   "req.hash_always_miss": {
@@ -1204,8 +1182,7 @@
     "type": "BOOL",
     "access": "RW",
     "methods": [
-      "recv",
-      "prehash"
+      "recv"
     ]
   },
   "segmented_caching.is_inner_req": {
@@ -1420,7 +1397,6 @@
     "type": "INTEGER",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -1440,7 +1416,6 @@
     "type": "INTEGER",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -1451,7 +1426,6 @@
     "type": "STRING",
     "access": "RW",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1463,7 +1437,6 @@
     "type": "STRING",
     "access": "RW",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1475,7 +1448,6 @@
     "type": "STRING",
     "access": "RW",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1487,7 +1459,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1499,7 +1470,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1511,7 +1481,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1523,7 +1492,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1535,7 +1503,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1547,7 +1514,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1556,10 +1522,9 @@
   "bereq.http.{NAME}": {
     "category": "backend-request",
     "desc": "HTTP headers by name sent to the backend",
-    "type": "HDR_BEREQ",
+    "type": "STRING",
     "access": "RWU",
     "methods": [
-      "pipe",
       "pass",
       "miss",
       "fetch"
@@ -1667,7 +1632,7 @@
   "beresp.http.{NAME}": {
     "category": "backend-response",
     "desc": "HTTP headers by name received from the backend",
-    "type": "HDR_BERESP",
+    "type": "STRING",
     "access": "RWU",
     "methods": [
       "fetch"
@@ -1779,8 +1744,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "fetch",
-      "fetch_complete"
+      "fetch"
     ]
   },
   "beresp.backend.ip": {
@@ -1789,8 +1753,7 @@
     "type": "IP",
     "access": "RO",
     "methods": [
-      "fetch",
-      "fetch_complete"
+      "fetch"
     ]
   },
   "beresp.used_alternate_path_to_origin": {
@@ -1835,8 +1798,7 @@
     "type": "INTEGER",
     "access": "RO",
     "methods": [
-      "fetch",
-      "fetch_complete"
+      "fetch"
     ]
   },
   "beresp.backend.requests": {
@@ -1908,7 +1870,6 @@
     "access": "RO",
     "methods": [
       "hit",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -1916,7 +1877,7 @@
   "obj.http.{NAME}": {
     "category": "cache-object",
     "desc": "HTTP headers stored for an object",
-    "type": "HDR_OBJ",
+    "type": "STRING",
     "access": "RWU",
     "methods": [
       "hit",
@@ -1993,7 +1954,6 @@
     "access": "RO",
     "methods": [
       "hit",
-      "predeliver",
       "deliver",
       "error",
       "log"
@@ -2006,7 +1966,6 @@
     "access": "RO",
     "methods": [
       "hit",
-      "predeliver",
       "deliver",
       "error",
       "log"
@@ -2019,7 +1978,6 @@
     "access": "RO",
     "methods": [
       "hit",
-      "predeliver",
       "deliver",
       "error",
       "log"
@@ -2032,7 +1990,6 @@
     "access": "RO",
     "methods": [
       "hit",
-      "predeliver",
       "deliver",
       "error",
       "log"
@@ -2044,7 +2001,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2082,7 +2038,6 @@
     "type": "INTEGER",
     "access": "RW",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2093,7 +2048,6 @@
     "type": "STRING",
     "access": "RW",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2101,10 +2055,9 @@
   "resp.http.{NAME}": {
     "category": "client-response",
     "desc": "HTTP headers by name sent to the client",
-    "type": "HDR_RESP",
+    "type": "STRING",
     "access": "RWU",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2404,8 +2357,7 @@
     "type": "TIME",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "now.sec": {
@@ -2414,8 +2366,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "healthcheck_log"
+      "all"
     ]
   },
   "time.start": {
@@ -2478,7 +2429,6 @@
     "type": "TIME",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2489,7 +2439,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2500,7 +2449,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2511,7 +2459,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2522,7 +2469,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2533,7 +2479,6 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2544,8 +2489,7 @@
     "type": "RTIME",
     "access": "RO",
     "methods": [
-      "all",
-      "fetch_complete"
+      "all"
     ]
   },
   "time.elapsed.sec": {
@@ -2599,7 +2543,6 @@
     "type": "RTIME",
     "access": "RO",
     "methods": [
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2647,9 +2590,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2661,9 +2602,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2710,8 +2649,7 @@
     "type": "STRING",
     "access": "RO",
     "methods": [
-      "all",
-      "fetch_complete"
+      "all"
     ]
   },
   "tls.client.protocol": {
@@ -2721,9 +2659,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2735,9 +2671,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2749,9 +2683,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2763,9 +2695,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2777,9 +2707,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2791,9 +2719,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2805,9 +2731,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2819,9 +2743,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2833,9 +2755,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2847,9 +2767,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2861,9 +2779,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2875,9 +2791,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2889,9 +2803,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2903,9 +2815,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2917,9 +2827,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2931,9 +2839,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2945,9 +2851,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2959,9 +2863,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2973,9 +2875,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -2987,9 +2887,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3001,9 +2899,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3015,9 +2911,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3029,9 +2923,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3043,9 +2935,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3057,9 +2947,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3071,9 +2959,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3085,9 +2971,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3099,9 +2983,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3113,9 +2995,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3127,9 +3007,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3141,9 +3019,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3155,9 +3031,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3169,9 +3043,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3183,9 +3055,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3197,9 +3067,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3211,9 +3079,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3225,9 +3091,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3239,9 +3103,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3253,9 +3115,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3267,9 +3127,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3281,9 +3139,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3295,9 +3151,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3309,9 +3163,7 @@
     "access": "RO",
     "methods": [
       "recv",
-      "prehash",
       "hash",
-      "predeliver",
       "deliver",
       "log"
     ]
@@ -3324,7 +3176,6 @@
     "methods": [
       "recv",
       "fetch",
-      "predeliver",
       "deliver",
       "error"
     ]
@@ -3620,7 +3471,7 @@
   "re.group.{N}": {
     "category": "miscellaneous",
     "desc": "Regular expression group capture",
-    "type": "RECAP",
+    "type": "STRING",
     "access": "RO",
     "methods": [
       "all"

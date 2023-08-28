@@ -2,7 +2,7 @@ import {
   TextDocument,
   TextDocumentContentChangeEvent,
   Range,
-  Position
+  Position,
 } from 'vscode-languageserver-textdocument'
 
 export class VclDocument {
@@ -97,12 +97,29 @@ export class VclDocument {
       if (subroutine) {
         // Remove any quoted strings, so we don't count brackets inside them.
         text.replace(/"([^"]*)"/g, '')
-        const openBrackets = (text.match(/\{/g) || []).length
-        const closeBrackets = (text.match(/\}/g) || []).length
-        if (openBrackets > closeBrackets) {
+        const openBr = (text.match(/\{/g) || []).length
+        const closeBr = (text.match(/\}/g) || []).length
+        if (openBr > closeBr) {
           return subroutine
         }
         return null
+      }
+    }
+    return null
+  }
+
+  getClosingBracePosition (position: Position): Position | null {
+    const br = {
+      open: 0,
+      closed: 0
+    }
+    for (let l = position.line; l < this._doc.lineCount; l++) {
+      const line = this.getLine({ line: l, character: 0 }).replace(/"([^"]*)"/g, '')   
+      br.open += (line.match(/\{/g) || []).length
+      br.closed += (line.match(/\}/g) || []).length
+      if (br.open === br.closed) {
+        const closingBraceChar = line.lastIndexOf('}')
+        return { line: l, character: closingBraceChar > 0 ? closingBraceChar : line.length }
       }
     }
     return null

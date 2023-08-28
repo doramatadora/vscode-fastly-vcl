@@ -7,8 +7,9 @@ import {
 import { lintText } from 'falco-js'
 
 import { VclDocument } from '../shared/vclDocument'
-
+import { updateDocumentSymbols } from '../symbol-provider'
 import { debounce } from '../shared/utils'
+import { ASTNode } from '../shared/ast'
 
 import {
   getDocumentSettings,
@@ -59,13 +60,17 @@ interface ErrorMap<T> {
   [file: string]: T
 }
 
+export interface Vcl {
+  AST: ASTNode
+}
+
 export interface LintResult {
   LintErrors: ErrorMap<LintError[]>
   ParseErrors: ErrorMap<ParseError>
   Infos: number
   Warnings: number
   Errors: number
-  Vcl?: any
+  Vcl?: Vcl
 }
 
 export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
@@ -86,6 +91,8 @@ export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
   })) as LintResult
 
   vclDoc.AST = lintResult.Vcl?.AST
+  
+  updateDocumentSymbols(vclDoc)
 
   let problems = 0
   const diagnostics: Diagnostic[] = []

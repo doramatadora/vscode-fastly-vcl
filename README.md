@@ -1,52 +1,45 @@
 # [Experimental] Fastly VCL language support for Visual Studio Code
 
-> 🩷 Please leave feedback via [Github issues](https://github.com/doramatadora/vscode-fastly-vcl/issues) 🩷
+This is the unofficial, work-in-progress [Language Server Protocol (LSP)](https://github.com/Microsoft/language-server-protocol) implementation for [Fastly VCL](https://developer.fastly.com/learning/vcl/using). You can install the official Fastly extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=fastly.vscode-fastly-vcl).
 
-This is a WIP by [Dora](https://github.com/doramatadora). The aim is to publish a Language Server for [Fastly VCL](https://developer.fastly.com/learning/vcl/using). For now, I'm building this out in the context of a VSCode extension. Follow along for:
-
-- [x] Syntax highlighting
-- [x] Diagnostics regenerated on each file change or configuration change
-- [x] Completions
-- [x] Boilerplate snippets
-- [x] Signature help
-- [x] Contextual autocomplete
-- [ ] Step-over debugging
-- [ ] Go to definition
-- [ ] Server-side syntax highlighting
-- [ ] Config flow to turn features on/off, with `.vclrc`
+> Feedback and feature requests: [Github issues](https://github.com/doramatadora/vscode-fastly-vcl/issues)
 
 ## Functionality
 
-The Fastly VCL Language Server works for `.vcl` files.
+This extension is still in an early state. It is usable but many advanced features have not yet been implemented. Currently supported features:
 
-## Building and running this extension
+- [x] Syntax highlighting
+- [x] Diagnostics
+- [x] Completions
+- [x] Boilerplate snippets
+- [x] Signature help
+- [x] Documentation on hover
 
-```term
-gh repo clone doramatadora/vscode-fastly-vcl
-cd vscode-fastly-vcl
-npm i
-```
+### Syntax highlighting
 
-### Debugging
+![Syntax highlighting](https://github.com/doramatadora/vscode-fastly-vcl/assets/12828487/b6d6af32-9dcc-4148-a90b-9ceb56cdeb3c)
 
-1. Open this folder in VS Code.
-1. Press `Cmd+Shift+B` to start compiling the client and server in watch mode.
-1. Press `Cmd+Shift+D` to switch to the **Run and Debug View** in the sidebar.
-1. Select `Fastly VCL Client` from the drop down.
-1. Press **▷** to run the launch config with the debugger attached (`F5`).
-1. In the [Extension Development Host](https://code.visualstudio.com/api/get-started/your-first-extension#:~:text=Then%2C%20inside%20the%20editor%2C%20press%20F5.%20This%20will%20compile%20and%20run%20the%20extension%20in%20a%20new%20Extension%20Development%20Host%20window.) instance of VSCode, open a document in `Fastly VCL` language mode. 
-1. Save the file with a `.vcl` extension. 
-1. Use it as a scratchpad to try out all the features!
+### Diagnostics (with [falco](https://github.com/ysugimoto/falco))
 
-### Packaging and installation
+![Diagnostics](https://github.com/doramatadora/vscode-fastly-vcl/assets/12828487/844e7f9d-63d7-4d32-9716-5a8e6cc871f5)
 
-```term
-npm run publish
-```
-(Don't worry, you won't be publishing anything. You'll get a `.vsix` file.)
+### Contextual completions
 
-1. Press `Cmd+Shift+X` to go to the VS Code extension tab.
-1. Click the ellipsis (above "Search Extensions in Marketplace") and go with `Install from VSIX...`
-1. Install the `.vsix` file you created.
+Completions include:
+* VCL functions
+* VCL variables
+* HTTP headers
+* Subroutine snippets
+* Fastly macros
 
-![How to install a VSIX](https://github.com/doramatadora/vscode-fastly-vcl/assets/12828487/090175b9-ae10-4982-a6b8-81f42998e587)
+![Completions](https://github.com/doramatadora/vscode-fastly-vcl/assets/12828487/79a02caa-6307-4785-b717-a9b508aee4f5)
+
+### Signature help
+
+![Signature help](https://github.com/doramatadora/vscode-fastly-vcl/assets/12828487/e52612d1-4429-4371-8da1-4f7aa352a56b)
+
+### Documentation on hover
+
+![Hover](https://github.com/doramatadora/vscode-fastly-vcl/assets/12828487/73c0148f-f7bc-4708-a34f-2aad17fde9da)
+
+

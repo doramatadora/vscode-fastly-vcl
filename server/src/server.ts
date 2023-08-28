@@ -1,32 +1,10 @@
 import {
   createConnection,
-  TextDocuments,
-  CodeAction,
-  CodeActionKind,
-  Command,
-  TextDocumentEdit,
-  TextEdit,
-  Position,
-  Diagnostic,
-  DiagnosticSeverity,
   ProposedFeatures,
   InitializeParams,
   DidChangeConfigurationNotification,
-  CompletionList,
-  CompletionItem,
-  CompletionItemKind,
-  TextDocumentPositionParams,
   TextDocumentSyncKind,
   InitializeResult,
-  CodeActionParams,
-  CompletionParams,
-  SignatureHelp,
-  WorkDoneProgressReporter,
-  CancellationToken,
-  DefinitionLink,
-  DeclarationLink,
-  Definition,
-  Location
 } from 'vscode-languageserver/node'
 
 import { ConfigSettings, CONFIG } from './config'
@@ -35,6 +13,7 @@ import { documentCache } from './shared/documentCache'
 import * as completionsProvider from './completion-provider'
 import * as signatureHelpProvider from './signature-help-provider'
 import * as hoverProvider from './hover-provider'
+import * as symbolProvider from './symbol-provider'
 import * as linter from './linter'
 
 // Create a connection for the server (Node-IPC transport).
@@ -51,7 +30,7 @@ connection.onInitialize((params: InitializeParams) => {
   // If client doesn't support the `workspace/configuration`, fall back on global settings.
   hasConfigurationCapability = !!capabilities.workspace?.configuration
   hasWorkspaceFolderCapability = !!capabilities.workspace?.workspaceFolders
-  
+
   hasDiagnosticRelatedInformationCapability =
     !!capabilities.textDocument?.publishDiagnostics?.relatedInformation
 
@@ -62,15 +41,15 @@ connection.onInitialize((params: InitializeParams) => {
       completionProvider: {
         resolveProvider: true,
         triggerCharacters: ['#'],
-        allCommitCharacters: [';', '{'],
         completionItem: {
           labelDetailsSupport: true
         }
       },
       signatureHelpProvider: {
-        triggerCharacters: ['(', ',']
+        triggerCharacters: ['(']
       },
-      hoverProvider: true
+      hoverProvider: true,
+      documentSymbolProvider: true
     }
   }
   if (hasWorkspaceFolderCapability) {
@@ -173,5 +152,11 @@ connection.onCompletionResolve(completionsProvider.resolve)
 connection.onSignatureHelp(signatureHelpProvider.help)
 
 connection.onHover(hoverProvider.resolve)
+
+connection.onDocumentSymbol(params => {
+  const document = documentCache.get(params.textDocument.uri)
+  if (!document) return []
+  return symbolProvider.getSymbolInformation(document)
+})
 
 connection.listen()
