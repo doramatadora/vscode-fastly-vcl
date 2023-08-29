@@ -16,7 +16,7 @@ client/node_modules/**
 falco
 Varnish
 protocol-registry
-falco-js
+.dora
 jq-filters
 Makefile
 scripts

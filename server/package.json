@@ -11,7 +11,7 @@
 		"node": "*"
 	},
 	"dependencies": {
-		"falco-js": "^0.23.1",
+		"falco-js": "^0.23.2",
 		"vscode-textmate": "^9.0.0",
 		"vscode-oniguruma": "^1.7.0",
 		"vscode-languageserver": "^8.1.0",
