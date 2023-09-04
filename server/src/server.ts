@@ -90,7 +90,7 @@ export function getDocumentSettings(
   if (!result) {
     result = connection.workspace.getConfiguration({
       scopeUri: resource,
-      section: 'doramatadora.vcl'
+      section: 'fastly.vcl'
     })
     documentSettings.set(resource, result)
   }
@@ -128,21 +128,10 @@ connection.onDidChangeTextDocument(async params => {
   linter.debouncedVCLLint(document)
 })
 
-connection.onDidSaveTextDocument(params => {
-  // The content of a text document has changed.
-})
-
 connection.onDidCloseTextDocument(params => {
   // Only cache open documents and their settings.
-  // TODO: hows this work for ASTs?
   documentSettings.delete(params.textDocument.uri)
   documentCache.delete(params.textDocument.uri)
-})
-
-connection.onDidChangeWatchedFiles(_changes => {
-  // TODO: Implement config file parsing and validation.
-  // Config files changed (e.g. .vclrc, .falcorc), may need to revalidate all open documents.
-  // Noop for now.
 })
 
 connection.onCompletion(completionsProvider.query)

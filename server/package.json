@@ -1,6 +1,6 @@
 {
-	"name": "fastly-vcl-language-server",
-	"description": "Fastly VCL language server.",
+	"name": "fastly-vcl-lsp",
+	"description": "Fastly VCL LSP server",
 	"author": "Dora Militaru <dora@doramilitaru.com>",
 	"repository": {
 		"type": "git",
@@ -9,12 +9,16 @@
 	"license": "MIT",
 	"engines": {
 		"node": "*"
-	},
-	"version": "0.1.0",
+	},  
+	"main": "./out/server",
+	"version": "0.2.0",
 	"dependencies": {
 		"falco-js": "^0.23.2",
 		"vscode-languageserver": "^8.1.0",
 		"vscode-languageserver-textdocument": "^1.0.8"
 	},
-	"scripts": {}
+	"scripts": {
+		"compile": "tsc -b",
+		"watch": "tsc -b -w"
+	}
 }

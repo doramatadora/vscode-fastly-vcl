@@ -4,8 +4,6 @@ import {
   Position
 } from 'vscode-languageserver/node'
 
-import { lintText } from 'falco-js'
-
 import { VclDocument } from '../shared/vclDocument'
 import { updateDocumentSymbols } from '../symbol-provider'
 import { debounce } from '../shared/utils'
@@ -74,11 +72,16 @@ export interface LintResult {
 }
 
 export async function validateVCLDocument (vclDoc: VclDocument): Promise<void> {
-  const settings = await getDocumentSettings(vclDoc.uri)
+  const { lintText } = await import('falco-js').catch((e) => {
+    // falco isn't available for Windows yet, fail gracefully.
+    console.error(`Diagnostic service unavailable.`, e.message)
+    return { lintText: null }
+  })
 
-  // if(!settings.lintingEnabled) {
-  //   return
-  // }
+  const settings = await getDocumentSettings(vclDoc.uri)
+  if(!lintText || !settings.lintingEnabled) {
+    return
+  }
 
   console.debug('lint', vclDoc.uri)
   // Remove file://

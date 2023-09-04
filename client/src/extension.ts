@@ -35,9 +35,7 @@ export function activate (context: ExtensionContext) {
     diagnosticCollectionName: 'vcl',
     synchronize: {
       // Notify the server about file changes to config files contained in the workspace.
-      // TODO: Make the config files count.
       fileEvents: [
-        workspace.createFileSystemWatcher('**/.falcorc'),
         workspace.createFileSystemWatcher('**/.vclrc')
       ]
     }

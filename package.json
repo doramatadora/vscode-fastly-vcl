@@ -47,13 +47,13 @@
       "type": "object",
       "title": "Fastly VCL",
       "properties": {
-        "doramatadora.vcl.lintingEnabled": {
+        "fastly.vcl.lintingEnabled": {
           "scope": "resource",
           "type": "boolean",
           "default": true,
           "description": "Experimental: Enable linting."
         },
-        "doramatadora.vcl.maxLintingIssues": {
+        "fastly.vcl.maxLintingIssues": {
           "scope": "resource",
           "type": "number",
           "default": 100,

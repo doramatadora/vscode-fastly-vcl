@@ -10,4 +10,3 @@ export const CONFIG: ConfigSettings = {
 }
 
 // TODO: Implement workspace-contextual config changes with .vclrc
-// TODO: Implement workspace-contextual linter severity overrides with .falcorc
