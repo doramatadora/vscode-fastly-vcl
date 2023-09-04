@@ -10,7 +10,7 @@
 	"engines": {
 		"node": "*"
 	},
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"dependencies": {
 		"falco-js": "^0.23.2",
 		"vscode-languageserver": "^8.1.0",

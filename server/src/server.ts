@@ -124,7 +124,7 @@ connection.onDidChangeTextDocument(async params => {
   // Apply incremental changes to the cached document.
   documentCache.applyChanges(params)
   const document = documentCache.get(params.textDocument.uri)
-  if (!document || !hasDiagnosticRelatedInformationCapability) return
+  if (!document) return
   linter.debouncedVCLLint(document)
 })
 
