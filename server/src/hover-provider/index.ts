@@ -1,4 +1,4 @@
-import { Hover, HoverParams, TextDocumentPositionParams } from 'vscode-languageserver/node'
+import { Hover, HoverParams } from 'vscode-languageserver/node'
 
 import { documentCache } from '../shared/documentCache'
 import { HEADER_RX } from '../shared/utils'
@@ -12,9 +12,9 @@ export function resolve (params: HoverParams): Hover {
   const activeDoc = documentCache.get(params.textDocument.uri)
   
   const hoverWord = activeDoc.getWord(params.position)
-  console.log('hover:resolve', { hoverWord, position: params.position })
+  console.debug('hover:resolve', { hoverWord, position: params.position })
   if (HEADER_RX.test(hoverWord)) {
-    return vclHeaders.HOVER.get(hoverWord.replace(HEADER_RX, ''))
+    return vclHeaders.HOVER.get(hoverWord.replace(HEADER_RX, '').toLowerCase())
   }
   const hoverMd =
     vclFunctions.HOVER.get(hoverWord) ||

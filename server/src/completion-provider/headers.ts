@@ -6,7 +6,7 @@ import {
   TextDocumentPositionParams
 } from 'vscode-languageserver/node'
 
-import { slugify, DOCS_URL } from '../shared/utils'
+import { HEADER_DOCS_URL } from '../shared/utils'
 
 import vclHeaders from '../metadata/headers.json'
 import vclSubroutines from '../metadata/subroutines.json'
@@ -51,7 +51,7 @@ for (const hName of Object.keys(vclHeaders)) {
       kind: MarkupKind.Markdown,
       value: [
         token.desc,
-        `[Documentation](${DOCS_URL}/http/http-headers/${slugify(hName)}/)`
+        `[Documentation](${HEADER_DOCS_URL}/${hName}/)`
       ]
         .filter(Boolean)
         .join('\n\n')
