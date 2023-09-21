@@ -16,7 +16,7 @@ for (const vName of Object.keys(vclVariables)) {
       value: [
         `## ${token.type} ${vName}`,
         token.desc,
-        `[Documentation](${DOCS_URL}/variables/${slugify(vName)}/)`
+        `[Documentation](${DOCS_URL}/variables/${token.category}/${slugify(vName)}/)`
       ]
         .filter(Boolean)
         .join('\n\n')

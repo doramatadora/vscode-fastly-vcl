@@ -44,7 +44,7 @@ for (const vName of Object.keys(vclVariables)) {
           token.access == `RO` ? `**Read-only:** ${token.desc}` : token.desc,
           token.methods?.length &&
             '**Scope:** `' + token.methods.join('`, `') + '`',
-          `[Documentation](${DOCS_URL}/variables/${slugify(vName)}/)`
+          `[Documentation](${DOCS_URL}/variables/${token.category}/${slugify(vName)}/)`
         ]
           .filter(Boolean)
           .join('\n\n')
